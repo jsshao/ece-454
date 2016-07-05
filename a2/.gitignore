@@ -1,0 +1,7 @@
+*.class
+Task1.jar
+Task2.jar
+Task3.jar
+Task4.jar
+output_hadoop/
+output_spark/

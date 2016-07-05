@@ -1,0 +1,146 @@
+package ece454;
+
+import java.util.*;
+import java.util.concurrent.*;
+import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+
+public class CC {
+    static class Edge {
+    int v1, v2;
+    Edge(int v1, int v2) { this.v1 = v1; this.v2 = v2; }
+    }
+
+    public static void main(String[] args) throws Exception {
+    int numThreads = Integer.parseInt(args[0]);
+    numThreads = 1;
+    int maxVertex = 0;
+
+    // read graph from input file
+    Edge[] edges = new Edge[10000000];
+    //int [] vertices = new int[20000000];
+    //List<Edge> edges = new ArrayList<>();
+    Set<Integer> vertices = new HashSet<>(10000000);
+    File file = new File(args[1]);
+    FileInputStream fis = new FileInputStream(file);
+    FileChannel fc = fis.getChannel();
+    MappedByteBuffer mmb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+    byte[] buffer = new byte[(int)fc.size()];
+    mmb.get(buffer);
+    fis.close();
+    BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
+
+    int ind = 0;
+    for (String line = in.readLine(); line != null; line = in.readLine()) {
+        String[] verts = line.split("\\s+");
+        int v1 = Integer.parseInt(verts[0]);
+        int v2 = Integer.parseInt(verts[1]);
+        Edge e = new Edge(v1, v2);
+        maxVertex = Math.max(maxVertex, v2);
+        edges[ind] = e;
+        ind++;
+        //edges.add(e);
+        vertices.add(v1);
+        vertices.add(v2);
+    }
+
+    in.close();
+        /*
+    FileInputStream fis = new FileInputStream(args[1]);
+    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+    ArrayList<String> buffer = new ArrayList<String>();
+    String line = null;
+    while ((line = br.readLine()) != null) {
+        buffer.add(line);
+        String[] verts = line.split("\\s+");
+        int v1 = Integer.parseInt(verts[0]);
+        int v2 = Integer.parseInt(verts[1]);
+        Edge e = new Edge(v1, v2);
+        maxVertex = Math.max(maxVertex, v2);
+        edges.add(e);
+        vertices.add(v1);
+        vertices.add(v2);
+    }
+    br.close();
+    if (1 == 1)
+        return;
+
+    // start worker threads
+    Thread[] threads = new Thread[numThreads];
+    UnionFind u = new UnionFind(maxVertex + 1);
+    for (int t = 0; t < numThreads; t++) {
+        threads[t] = new Thread(new MyRunnable(u, edges));
+        threads[t].start();
+    }
+
+    // wait for threads to finish
+    for (int t = 0; t < numThreads; t++) {
+        threads[t].join();
+    }
+
+    // generate output
+    PrintWriter pw = new PrintWriter(new FileWriter(args[2]));
+    for (int i: vertices) {
+        pw.println(i + " " + "<replace with component label>");
+    }
+    pw.close();
+        */
+    }
+
+    static class MyRunnable implements Runnable {
+        private List<Edge> edges;
+        private UnionFind union;
+
+        public MyRunnable(UnionFind u, List<Edge> e) {
+            edges = e;
+            union = u;
+        }
+        public void run() {
+        }
+    }
+
+    static public class UnionFind {
+
+      private int[] _parent;
+      private int[] _rank;
+
+
+      public int find(int i) {
+
+        int p = _parent[i];
+        if (i == p) {
+          return i;
+        }
+        return _parent[i] = find(p);
+
+      }
+
+      public void union(int i, int j) {
+        int root1 = find(i);
+        int root2 = find(j);
+
+        if (root2 == root1) return;
+
+        if (_rank[root1] > _rank[root2]) {
+          _parent[root2] = root1;
+        } else if (_rank[root2] > _rank[root1]) {
+          _parent[root1] = root2;
+        } else {
+          _parent[root2] = root1;
+          _rank[root1]++;
+        }
+      }
+
+      public UnionFind(int max) {
+        _parent = new int[max];
+        _rank = new int[max];
+
+        for (int i = 0; i < max; i++) {
+          _parent[i] = i;
+        }
+      }
+    }
+}

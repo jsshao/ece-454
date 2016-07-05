@@ -1,0 +1,3 @@
+run "ant" to build the code
+populate a1.config with a list of hosts and ports
+run "ant runserver" to launch a storage node
