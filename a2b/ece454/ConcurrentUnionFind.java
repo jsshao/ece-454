@@ -135,7 +135,25 @@ public final class ConcurrentUnionFind<T> {
         /* Otherwise, look up the parent of this element, then compress the
          * path.
          */
-        info.parent = recFind(info.parent);
+        //info.parent = recFind(info.parent);
+        //return info.parent;
+        return recFind(info.parent);
+    }
+
+    private T compress(T elem) {
+        /* Get the info on this object. */
+        Link<T> info = elems.get(elem);
+
+        /* If the element is its own parent, it's the representative of its
+         * class and we should say so.
+         */
+        if (info.parent.equals(elem))
+            return elem;
+
+        /* Otherwise, look up the parent of this element, then compress the
+         * path.
+         */
+        info.parent = compress(info.parent);
         return info.parent;
     }
     
@@ -149,32 +167,58 @@ public final class ConcurrentUnionFind<T> {
      * @throws NoSuchElementException If either element does not exist.
      */
     public void union(T one, T two) {       
-        /* Get the link info for the parents.  This also handles the exception
-         * guarantee.
-         */
-        Link<T> oneLink = elems.get(find(one));
-        Link<T> twoLink = elems.get(find(two));
-
-        /* If these are the same object, we're done. */
-        if (oneLink == twoLink) return;
-
-        /* Otherwise, link the two.  We'll do a union-by-rank, where the parent
-         * with the lower rank will merge with the parent with higher rank.
-         */
-        if (oneLink.rank > twoLink.rank) {
-            /* Since each parent must link to itself, the value of oneLink.parent
-             * is the representative of one.
+        while (true) {
+            /* Get the link info for the parents.  This also handles the exception
+             * guarantee.
              */
-            twoLink.parent = oneLink.parent;
-        } else if (oneLink.rank < twoLink.rank) {
-            /* Same logic as above. */
-            oneLink.parent = twoLink.parent;
-        } else {
-            /* Arbitrarily wire one to be the parent of two. */
-            twoLink.parent = oneLink.parent;
-            
-            /* Bump up the representative of one to the next rank. */
-            oneLink.rank++;
+            Link<T> oneLink = elems.get(find(one));
+            Link<T> twoLink = elems.get(find(two));
+
+            /* If these are the same object, we're done. */
+            if (oneLink == twoLink) return;
+            else if (oneLink.rank > twoLink.rank) {
+                Link<T> tmp = oneLink;
+                oneLink = twoLink;
+                twoLink = tmp;
+            }
+
+            /* Otherwise, link the two.  We'll do a union-by-rank, where the parent
+             * with the lower rank will merge with the parent with higher rank.
+             */
+            synchronized (oneLink) {
+                synchronized (twoLink) {
+                    // Check again to make sure they're roots
+                    if (oneLink != elems.get(oneLink.parent) || twoLink != elems.get(twoLink.parent)) {
+                        continue;
+                    }
+
+                    if (oneLink.rank > twoLink.rank) {
+                        Link<T> tmp = oneLink;
+                        oneLink = twoLink;
+                        twoLink = tmp;
+                    }
+
+
+                    if (oneLink.rank > twoLink.rank) {
+                        /* Since each parent must link to itself, the value of oneLink.parent
+                         * is the representative of one.
+                         */
+                        twoLink.parent = oneLink.parent;
+                    } else if (oneLink.rank < twoLink.rank) {
+                        /* Same logic as above. */
+                        oneLink.parent = twoLink.parent;
+                    } else {
+                        /* Arbitrarily wire one to be the parent of two. */
+                        twoLink.parent = oneLink.parent;
+                        
+                        /* Bump up the representative of one to the next rank. */
+                        oneLink.rank++;
+                    }
+                    compress(one);
+                    compress(two);
+                }
+            }
+            break;
         }
     }
 

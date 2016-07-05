@@ -138,9 +138,9 @@ public class CC {
                         v2 = v2*10+line.charAt(i)-'0';
                     union.add(v1);
                     union.add(v2);
-                    synchronized(lock) {
+//                    synchronized(lock) {
                         union.union(v1, v2);
-                    }
+//                    }
                 }
                 br.close();
             } catch (Exception e) {
