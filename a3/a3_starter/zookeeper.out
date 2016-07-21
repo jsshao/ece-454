@@ -1,0 +1,89 @@
+2016-07-20 22:45:20,936 [myid:] - INFO  [main:QuorumPeerConfig@103] - Reading configuration from: /home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../conf/zoo.cfg
+2016-07-20 22:45:20,940 [myid:] - INFO  [main:DatadirCleanupManager@78] - autopurge.snapRetainCount set to 3
+2016-07-20 22:45:20,940 [myid:] - INFO  [main:DatadirCleanupManager@79] - autopurge.purgeInterval set to 0
+2016-07-20 22:45:20,940 [myid:] - INFO  [main:DatadirCleanupManager@101] - Purge task is not scheduled.
+2016-07-20 22:45:20,941 [myid:] - WARN  [main:QuorumPeerMain@113] - Either no config or no quorum defined in config, running  in standalone mode
+2016-07-20 22:45:20,949 [myid:] - INFO  [main:QuorumPeerConfig@103] - Reading configuration from: /home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../conf/zoo.cfg
+2016-07-20 22:45:20,949 [myid:] - INFO  [main:ZooKeeperServerMain@95] - Starting server
+2016-07-20 22:45:20,954 [myid:] - INFO  [main:Environment@100] - Server environment:zookeeper.version=3.4.8--1, built on 02/06/2016 03:18 GMT
+2016-07-20 22:45:20,954 [myid:] - INFO  [main:Environment@100] - Server environment:host.name=ecelinux3
+2016-07-20 22:45:20,954 [myid:] - INFO  [main:Environment@100] - Server environment:java.version=1.8.0_91
+2016-07-20 22:45:20,954 [myid:] - INFO  [main:Environment@100] - Server environment:java.vendor=Oracle Corporation
+2016-07-20 22:45:20,954 [myid:] - INFO  [main:Environment@100] - Server environment:java.home=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.91-1.b14.el7_2.x86_64/jre
+2016-07-20 22:45:20,954 [myid:] - INFO  [main:Environment@100] - Server environment:java.class.path=/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../build/classes:/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../build/lib/*.jar:/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../lib/slf4j-log4j12-1.6.1.jar:/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../lib/slf4j-api-1.6.1.jar:/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../lib/netty-3.7.0.Final.jar:/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../lib/log4j-1.2.16.jar:/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../lib/jline-0.9.94.jar:/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../zookeeper-3.4.8.jar:/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../src/java/lib/*.jar:/home/jsshao/ece-454/a3/a3_starter/zookeeper-3.4.8/bin/../conf:
+2016-07-20 22:45:20,954 [myid:] - INFO  [main:Environment@100] - Server environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+2016-07-20 22:45:20,954 [myid:] - INFO  [main:Environment@100] - Server environment:java.io.tmpdir=/tmp
+2016-07-20 22:45:20,954 [myid:] - INFO  [main:Environment@100] - Server environment:java.compiler=<NA>
+2016-07-20 22:45:20,955 [myid:] - INFO  [main:Environment@100] - Server environment:os.name=Linux
+2016-07-20 22:45:20,955 [myid:] - INFO  [main:Environment@100] - Server environment:os.arch=amd64
+2016-07-20 22:45:20,955 [myid:] - INFO  [main:Environment@100] - Server environment:os.version=3.10.0-327.22.2.el7.x86_64
+2016-07-20 22:45:20,955 [myid:] - INFO  [main:Environment@100] - Server environment:user.name=jsshao
+2016-07-20 22:45:20,955 [myid:] - INFO  [main:Environment@100] - Server environment:user.home=/home/jsshao
+2016-07-20 22:45:20,955 [myid:] - INFO  [main:Environment@100] - Server environment:user.dir=/home/jsshao/ece-454/a3/a3_starter
+2016-07-20 22:45:20,960 [myid:] - INFO  [main:ZooKeeperServer@787] - tickTime set to 2000
+2016-07-20 22:45:20,960 [myid:] - INFO  [main:ZooKeeperServer@796] - minSessionTimeout set to -1
+2016-07-20 22:45:20,960 [myid:] - INFO  [main:ZooKeeperServer@805] - maxSessionTimeout set to -1
+2016-07-20 22:45:20,967 [myid:] - INFO  [main:NIOServerCnxnFactory@89] - binding to port 0.0.0.0/0.0.0.0:10420
+2016-07-20 22:49:08,648 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50258
+2016-07-20 22:49:08,692 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50258
+2016-07-20 22:49:08,693 [myid:] - INFO  [SyncThread:0:FileTxnLog@199] - Creating new log file: log.1
+2016-07-20 22:49:08,701 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10000 with negotiated timeout 30000 for client /127.0.0.1:50258
+2016-07-20 22:49:44,728 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10000
+2016-07-20 22:49:44,731 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50258 which had sessionid 0x1560b57d5d10000
+2016-07-20 23:28:08,871 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50300
+2016-07-20 23:28:08,874 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50300
+2016-07-20 23:28:08,875 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10001 with negotiated timeout 10000 for client /127.0.0.1:50300
+2016-07-20 23:28:15,935 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@357] - caught end of stream exception
+EndOfStreamException: Unable to read additional data from client sessionid 0x1560b57d5d10001, likely client has closed socket
+	at org.apache.zookeeper.server.NIOServerCnxn.doIO(NIOServerCnxn.java:230)
+	at org.apache.zookeeper.server.NIOServerCnxnFactory.run(NIOServerCnxnFactory.java:203)
+	at java.lang.Thread.run(Thread.java:745)
+2016-07-20 23:28:15,937 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50300 which had sessionid 0x1560b57d5d10001
+2016-07-20 23:28:26,000 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x1560b57d5d10001, timeout of 10000ms exceeded
+2016-07-20 23:28:26,001 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10001
+2016-07-20 23:29:17,540 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50302
+2016-07-20 23:29:17,544 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50302
+2016-07-20 23:29:17,545 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10002 with negotiated timeout 10000 for client /127.0.0.1:50302
+2016-07-20 23:29:18,775 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@357] - caught end of stream exception
+EndOfStreamException: Unable to read additional data from client sessionid 0x1560b57d5d10002, likely client has closed socket
+	at org.apache.zookeeper.server.NIOServerCnxn.doIO(NIOServerCnxn.java:230)
+	at org.apache.zookeeper.server.NIOServerCnxnFactory.run(NIOServerCnxnFactory.java:203)
+	at java.lang.Thread.run(Thread.java:745)
+2016-07-20 23:29:18,776 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50302 which had sessionid 0x1560b57d5d10002
+2016-07-20 23:29:28,000 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x1560b57d5d10002, timeout of 10000ms exceeded
+2016-07-20 23:29:28,000 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10002
+2016-07-20 23:29:31,290 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50304
+2016-07-20 23:29:31,292 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50304
+2016-07-20 23:29:31,293 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10003 with negotiated timeout 10000 for client /127.0.0.1:50304
+2016-07-20 23:29:31,295 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10003
+2016-07-20 23:29:31,296 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50304 which had sessionid 0x1560b57d5d10003
+2016-07-20 23:30:14,732 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50308
+2016-07-20 23:30:14,734 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50308
+2016-07-20 23:30:14,736 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10004 with negotiated timeout 10000 for client /127.0.0.1:50308
+2016-07-20 23:30:14,738 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10004
+2016-07-20 23:30:14,739 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50308 which had sessionid 0x1560b57d5d10004
+2016-07-20 23:37:08,631 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50386
+2016-07-20 23:37:08,633 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50386
+2016-07-20 23:37:08,635 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10005 with negotiated timeout 10000 for client /127.0.0.1:50386
+2016-07-20 23:37:08,648 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10005
+2016-07-20 23:37:08,650 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50386 which had sessionid 0x1560b57d5d10005
+2016-07-20 23:37:31,544 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50388
+2016-07-20 23:37:31,547 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50388
+2016-07-20 23:37:31,548 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10006 with negotiated timeout 10000 for client /127.0.0.1:50388
+2016-07-20 23:37:31,564 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10006
+2016-07-20 23:37:31,565 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50388 which had sessionid 0x1560b57d5d10006
+2016-07-20 23:39:53,468 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50392
+2016-07-20 23:39:53,471 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50392
+2016-07-20 23:39:53,472 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10007 with negotiated timeout 10000 for client /127.0.0.1:50392
+2016-07-20 23:39:53,484 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10007
+2016-07-20 23:39:53,485 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50392 which had sessionid 0x1560b57d5d10007
+2016-07-20 23:40:46,335 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50398
+2016-07-20 23:40:46,337 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50398
+2016-07-20 23:40:46,339 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10008 with negotiated timeout 10000 for client /127.0.0.1:50398
+2016-07-20 23:40:46,356 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10008
+2016-07-20 23:40:46,358 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50398 which had sessionid 0x1560b57d5d10008
+2016-07-20 23:49:45,495 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:50472
+2016-07-20 23:49:45,498 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:50472
+2016-07-20 23:49:45,501 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x1560b57d5d10009 with negotiated timeout 10000 for client /127.0.0.1:50472
+2016-07-20 23:49:45,519 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x1560b57d5d10009
+2016-07-20 23:49:45,521 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:50472 which had sessionid 0x1560b57d5d10009
