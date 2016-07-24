@@ -106,9 +106,10 @@ public class A3Client implements CuratorWatcher {
         GetChildrenBuilder childrenBuilder = curClient.getChildren();
         List<String> children = childrenBuilder.watched().forPath(zkNode);
         String primary = null;
+        String primaryChild = null;
         for (String child : children) {
-            if (primary == null || child.compareTo(primary) < 0) {
-                primary = child;
+            if (primaryChild == null || child.compareTo(primaryChild) < 0) {
+                primary = new String(curClient.getData().forPath(zkNode + "/" + child));
             }
         }
         if (primary == null) {
