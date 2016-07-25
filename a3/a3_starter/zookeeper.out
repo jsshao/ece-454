@@ -134,3 +134,76 @@ EndOfStreamException: Unable to read additional data from client sessionid 0x156
 2016-07-23 23:17:52,388 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:47854 which had sessionid 0x15610c79664000f
 2016-07-23 23:18:14,000 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x15610c79664000e, timeout of 30000ms exceeded
 2016-07-23 23:18:14,000 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c79664000e
+2016-07-25 10:22:20,278 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36768
+2016-07-25 10:22:20,280 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36768
+2016-07-25 10:22:20,281 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640010 with negotiated timeout 10000 for client /127.0.0.1:36768
+2016-07-25 10:22:20,868 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640010
+2016-07-25 10:22:20,870 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36768 which had sessionid 0x15610c796640010
+2016-07-25 10:22:23,967 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c79664000c
+2016-07-25 10:22:23,968 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:47848 which had sessionid 0x15610c79664000c
+2016-07-25 11:03:36,617 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36802
+2016-07-25 11:03:36,620 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36802
+2016-07-25 11:03:36,621 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640011 with negotiated timeout 10000 for client /127.0.0.1:36802
+2016-07-25 11:04:01,661 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36804
+2016-07-25 11:04:01,663 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36804
+2016-07-25 11:04:01,664 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640012 with negotiated timeout 10000 for client /127.0.0.1:36804
+2016-07-25 11:04:01,666 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640012
+2016-07-25 11:04:01,667 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36804 which had sessionid 0x15610c796640012
+2016-07-25 11:04:43,134 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36806
+2016-07-25 11:04:43,137 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36806
+2016-07-25 11:04:43,138 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640013 with negotiated timeout 10000 for client /127.0.0.1:36806
+2016-07-25 11:04:48,126 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36808
+2016-07-25 11:04:48,128 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36808
+2016-07-25 11:04:48,130 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640014 with negotiated timeout 30000 for client /127.0.0.1:36808
+2016-07-25 11:04:58,142 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@357] - caught end of stream exception
+EndOfStreamException: Unable to read additional data from client sessionid 0x15610c796640014, likely client has closed socket
+	at org.apache.zookeeper.server.NIOServerCnxn.doIO(NIOServerCnxn.java:230)
+	at org.apache.zookeeper.server.NIOServerCnxnFactory.run(NIOServerCnxnFactory.java:203)
+	at java.lang.Thread.run(Thread.java:745)
+2016-07-25 11:04:58,143 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36808 which had sessionid 0x15610c796640014
+2016-07-25 11:05:02,796 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36810
+2016-07-25 11:05:02,798 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36810
+2016-07-25 11:05:02,800 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640015 with negotiated timeout 10000 for client /127.0.0.1:36810
+2016-07-25 11:05:02,830 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640015
+2016-07-25 11:05:02,831 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36810 which had sessionid 0x15610c796640015
+2016-07-25 11:05:22,001 [myid:] - INFO  [SessionTracker:ZooKeeperServer@355] - Expiring session 0x15610c796640014, timeout of 30000ms exceeded
+2016-07-25 11:05:22,001 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640014
+2016-07-25 11:05:45,064 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /129.97.56.12:49150
+2016-07-25 11:05:45,065 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /129.97.56.12:49150
+2016-07-25 11:05:45,067 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640016 with negotiated timeout 10000 for client /129.97.56.12:49150
+2016-07-25 11:05:48,294 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640016
+2016-07-25 11:05:48,295 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /129.97.56.12:49150 which had sessionid 0x15610c796640016
+2016-07-25 11:25:03,302 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640013
+2016-07-25 11:25:03,305 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36806 which had sessionid 0x15610c796640013
+2016-07-25 11:25:04,235 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640011
+2016-07-25 11:25:04,237 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36802 which had sessionid 0x15610c796640011
+2016-07-25 11:53:45,488 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36898
+2016-07-25 11:53:45,491 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36898
+2016-07-25 11:53:45,492 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640017 with negotiated timeout 10000 for client /127.0.0.1:36898
+2016-07-25 11:54:15,685 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36902
+2016-07-25 11:54:15,688 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36902
+2016-07-25 11:54:15,689 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640018 with negotiated timeout 10000 for client /127.0.0.1:36902
+2016-07-25 11:54:23,736 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /129.97.56.12:49432
+2016-07-25 11:54:23,738 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /129.97.56.12:49432
+2016-07-25 11:54:23,740 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c796640019 with negotiated timeout 10000 for client /129.97.56.12:49432
+2016-07-25 11:54:29,827 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640019
+2016-07-25 11:54:29,828 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /129.97.56.12:49432 which had sessionid 0x15610c796640019
+2016-07-25 11:59:34,096 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640018
+2016-07-25 11:59:34,098 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36902 which had sessionid 0x15610c796640018
+2016-07-25 11:59:35,839 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c796640017
+2016-07-25 11:59:35,840 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36898 which had sessionid 0x15610c796640017
+2016-07-25 12:20:40,974 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36938
+2016-07-25 12:20:40,976 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36938
+2016-07-25 12:20:40,978 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c79664001a with negotiated timeout 10000 for client /127.0.0.1:36938
+2016-07-25 12:21:15,283 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /127.0.0.1:36972
+2016-07-25 12:21:15,286 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /127.0.0.1:36972
+2016-07-25 12:21:15,287 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c79664001b with negotiated timeout 10000 for client /127.0.0.1:36972
+2016-07-25 12:21:20,142 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxnFactory@192] - Accepted socket connection from /129.97.56.12:49502
+2016-07-25 12:21:20,144 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:ZooKeeperServer@900] - Client attempting to establish new session at /129.97.56.12:49502
+2016-07-25 12:21:20,145 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@645] - Established session 0x15610c79664001c with negotiated timeout 10000 for client /129.97.56.12:49502
+2016-07-25 12:21:26,174 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c79664001c
+2016-07-25 12:21:26,175 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /129.97.56.12:49502 which had sessionid 0x15610c79664001c
+2016-07-25 12:21:31,937 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c79664001b
+2016-07-25 12:21:31,939 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36972 which had sessionid 0x15610c79664001b
+2016-07-25 12:21:32,846 [myid:] - INFO  [ProcessThread(sid:0 cport:10420)::PrepRequestProcessor@489] - Processed session termination for sessionid: 0x15610c79664001a
+2016-07-25 12:21:32,848 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:10420:NIOServerCnxn@1008] - Closed socket connection for client /127.0.0.1:36938 which had sessionid 0x15610c79664001a

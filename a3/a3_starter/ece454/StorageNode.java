@@ -59,11 +59,8 @@ public class StorageNode {
             }
         }).start();
 
-        // TODO: create an ephemeral node in ZooKeeper
-        // curClient.create()....
+        // create an ephemeral node in ZooKeeper
         String data = args[0] + ":" + args[1];
-        System.out.println("Jason");
-        System.out.println(data);
         curClient.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(args[3] + "/child-", data.getBytes());
     }
 }
