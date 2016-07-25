@@ -27,6 +27,8 @@ public class KeyValueHandler implements KeyValueService.Iface {
     private HashSet<String> pool = new HashSet<String>(); 
     private boolean snapshotted = false;
     private Object backup_lock = new Object();
+    private Object client_lock = new Object();
+    KeyValueService.Client client = null;
 
     public KeyValueHandler(String host, int port, CuratorFramework curClient, String zkNode) {
         this.host = host;
@@ -40,14 +42,14 @@ public class KeyValueHandler implements KeyValueService.Iface {
     {	
         if (isPrimary()) {
             try {
-                lock(key);
+                //lock(key);
                 String ret = myMap.get(key);
                 if (ret == null)
                     return "";
                 else
                     return ret;
             } finally {
-                unlock(key);
+                //unlock(key);
             } 
         } else {
             String ret = myMap.get(key);
@@ -60,24 +62,28 @@ public class KeyValueHandler implements KeyValueService.Iface {
 
     public void put(String key, String value) throws org.apache.thrift.TException
     {
-        if (isPrimary() && getBackup() != null) {
+        //System.out.println("PUT " + key);
+        if ((isPrimary() && getBackup() != null)) {
             try {
-                lock(key);
+                //lock(key);
                 myMap.put(key, value);
-                KeyValueService.Client client = getThriftClient();
-                while (true) {
+                synchronized (client_lock) {
                     try {
                         client.put(key, value);
-                        break;
                     } catch (Exception e) {
-                        client = getThriftClient();
+                        e.printStackTrace(System.out);
                     }
                 }
             } finally {
-                unlock(key);
+                //unlock(key);
             }
         } else {
-            myMap.put(key, value);
+            try {
+                //lock(key);
+                myMap.put(key, value);
+            } finally {
+                //unlock(key);
+            }
         }
     }
 
@@ -124,25 +130,27 @@ public class KeyValueHandler implements KeyValueService.Iface {
     }
 
     private String getPrimary() {
-        try {
-            GetChildrenBuilder childrenBuilder = curClient.getChildren();
-            List<String> children = childrenBuilder.watched().forPath(zkNode);
-            String primary = null;
-            String primaryChild = null;
-            for (String child : children) {
-                if (primaryChild == null || child.compareTo(primaryChild) < 0) {
-                    primary = new String(curClient.getData().forPath(zkNode + "/" + child));
+        while (true) {
+            try {
+                GetChildrenBuilder childrenBuilder = curClient.getChildren();
+                List<String> children = childrenBuilder.watched().forPath(zkNode);
+                String primary = null;
+                String primaryChild = null;
+                for (String child : children) {
+                    if (primaryChild == null || child.compareTo(primaryChild) < 0) {
+                        primary = new String(curClient.getData().forPath(zkNode + "/" + child));
+                    }
                 }
+                return primary;
+            } catch (Exception e) {
+                System.out.println("exception getting primary.. trying again");
+                e.printStackTrace(System.out);
             }
-            return primary;
-        } catch (Exception e) {
-            System.out.println("Cannot get primary");
-            return null;
         }
     }
 
     private boolean isPrimary() {
-        return host + ":" + port == getPrimary();
+        return (host + ":" + port).equals(getPrimary());
     }
 
     private String getBackup() {
@@ -153,11 +161,11 @@ public class KeyValueHandler implements KeyValueService.Iface {
                 String primary = getPrimary();
                 for (String child : children) {
                     String addr = new String(curClient.getData().forPath(zkNode + "/" + child));
-                    if (addr != primary) {
+                    if (!addr.equals(primary)) {
                         // First time seeing new backup. Copy snapshot
                         if (!snapshotted) {
                             snapshotted = true;
-                            KeyValueService.Client client = getThriftClient(addr);
+                            client = getThriftClient(addr);
                             for (String key: myMap.keySet()) {
                                 client.put(key, myMap.get(key));
                             }                            
