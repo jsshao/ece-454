@@ -17,7 +17,7 @@ import org.apache.curator.framework.*;
 import org.apache.curator.framework.api.*;
 
 import org.apache.log4j.*;
-
+import ece454.test.ExecutionLogger;
 
 public class A3Client implements CuratorWatcher {
     String zkConnectString;
@@ -27,6 +27,7 @@ public class A3Client implements CuratorWatcher {
     int keySpaceSize;
     CuratorFramework curClient;
     static Logger log;
+    ExecutionLogger exlog = new ExecutionLogger("execution.log");
 
     public static void main(String [] args) throws Exception {
         if (args.length != 5) {
@@ -55,6 +56,7 @@ public class A3Client implements CuratorWatcher {
         this.numThreads = numThreads;
         this.numOps = numOps;
         this.keySpaceSize = keySpaceSize;
+        exlog.start();
     }
 
     void start() {
@@ -101,6 +103,7 @@ public class A3Client implements CuratorWatcher {
 
     void stop() {
         curClient.close();
+        exlog.stop();
     }
 
     InetSocketAddress getPrimary() throws Exception {
@@ -155,6 +158,7 @@ public class A3Client implements CuratorWatcher {
         public void run() {
             Random rand = new Random();
             totalTime = 0;
+            long tid = Thread.currentThread().getId();
             try {
                 for (long i = 0; i < numOps; i++) {
                     String key = "key-" + (rand.nextLong() % keySpaceSize);
@@ -164,7 +168,9 @@ public class A3Client implements CuratorWatcher {
                     if (rand.nextBoolean()) {
                     while (true) {
                         try {
+                            exlog.logWriteInvocation(tid, key, value);
                         client.put(key, value);
+                            exlog.logWriteResponse(tid);
                         break;
                         } catch (Exception e) {
                         log.error("Exception during put", e);
@@ -174,7 +180,9 @@ public class A3Client implements CuratorWatcher {
                     } else {
                     while (true) {
                         try {
-                        client.get(key);
+                            exlog.logReadInvocation(tid, key);
+                        String resp = client.get(key);
+                            exlog.logReadResponse(tid, resp);
                         break;
                         } catch (Exception e) {
                         log.error("Exception during get", e);

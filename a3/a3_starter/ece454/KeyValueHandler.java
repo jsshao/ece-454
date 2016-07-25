@@ -139,6 +139,16 @@ public class KeyValueHandler implements KeyValueService.Iface {
                 for (String child : children) {
                     if (primaryChild == null || child.compareTo(primaryChild) < 0) {
                         primary = new String(curClient.getData().forPath(zkNode + "/" + child));
+                        /*
+                        curClient.getData().usingWatcher(new CuratorWatcher() {
+                            @Override
+                            public void process(WatchedEvent event) throws Exception {
+                                if (event.getType().equals(Watcher.Event.EventType.NodeDataChanged)) {
+                                    System.out.println("SOMETHING CHANGED");
+                                }
+                            }
+                        }).forPath(zkNode + "/" + child);
+                        */
                     }
                 }
                 return primary;
