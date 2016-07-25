@@ -23,12 +23,14 @@ public class KeyValueHandler implements KeyValueService.Iface {
     private CuratorFramework curClient;
     private String zkNode;
     private String host;
+    private String backup = null;
     private int port;
     private HashSet<String> pool = new HashSet<String>(); 
+    private HashMap<Long, KeyValueService.Client> clients = new HashMap<Long, KeyValueService.Client>();
     private boolean snapshotted = false;
     private Object backup_lock = new Object();
-    private Object client_lock = new Object();
-    KeyValueService.Client client = null;
+    //private Object client_lock = new Object();
+    //KeyValueService.Client client = null;
 
     public KeyValueHandler(String host, int port, CuratorFramework curClient, String zkNode) {
         this.host = host;
@@ -42,14 +44,14 @@ public class KeyValueHandler implements KeyValueService.Iface {
     {	
         if (isPrimary()) {
             try {
-                //lock(key);
+                lock(key);
                 String ret = myMap.get(key);
                 if (ret == null)
                     return "";
                 else
                     return ret;
             } finally {
-                //unlock(key);
+                unlock(key);
             } 
         } else {
             String ret = myMap.get(key);
@@ -65,17 +67,19 @@ public class KeyValueHandler implements KeyValueService.Iface {
         //System.out.println("PUT " + key);
         if ((isPrimary() && getBackup() != null)) {
             try {
-                //lock(key);
+                lock(key);
                 myMap.put(key, value);
-                synchronized (client_lock) {
-                    try {
-                        client.put(key, value);
-                    } catch (Exception e) {
-                        e.printStackTrace(System.out);
+                try {
+                    if (!clients.containsKey(Thread.currentThread().getId())) {
+                        clients.put(Thread.currentThread().getId(), getThriftClient(backup));
                     }
+                    KeyValueService.Client client = clients.get(Thread.currentThread().getId());
+                    client.put(key, value);
+                } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
             } finally {
-                //unlock(key);
+                unlock(key);
             }
         } else {
             try {
@@ -104,10 +108,6 @@ public class KeyValueHandler implements KeyValueService.Iface {
             pool.remove(name);
             pool.notifyAll();
         }
-    }
-
-    private KeyValueService.Client getThriftClient() {
-        return getThriftClient(getBackup());
     }
 
     private KeyValueService.Client getThriftClient(String backup) {
@@ -155,6 +155,8 @@ public class KeyValueHandler implements KeyValueService.Iface {
 
     private String getBackup() {
         synchronized(backup_lock) {
+            if (backup != null)
+                return backup;
             try {
                 GetChildrenBuilder childrenBuilder = curClient.getChildren();
                 List<String> children = childrenBuilder.watched().forPath(zkNode);
@@ -165,11 +167,16 @@ public class KeyValueHandler implements KeyValueService.Iface {
                         // First time seeing new backup. Copy snapshot
                         if (!snapshotted) {
                             snapshotted = true;
-                            client = getThriftClient(addr);
+                            //client = getThriftClient(addr);
+                            if (!clients.containsKey(Thread.currentThread().getId())) {
+                                clients.put(Thread.currentThread().getId(), getThriftClient(addr));
+                            }
+                            KeyValueService.Client client = clients.get(Thread.currentThread().getId());
                             for (String key: myMap.keySet()) {
                                 client.put(key, myMap.get(key));
                             }                            
                         }
+                        backup = addr;
                         return addr;
                     }
                 }
