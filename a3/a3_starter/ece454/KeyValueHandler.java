@@ -16,6 +16,7 @@ import org.apache.curator.*;
 import org.apache.curator.retry.*;
 import org.apache.curator.framework.*;
 import org.apache.curator.framework.api.*;
+import org.apache.curator.framework.recipes.cache.*;
 
 
 public class KeyValueHandler implements KeyValueService.Iface {
@@ -24,13 +25,13 @@ public class KeyValueHandler implements KeyValueService.Iface {
     private String zkNode;
     private String host;
     private String backup = null;
+    private Boolean IsPrimary = null;
+    private String primaryCache = null;
     private int port;
     private HashSet<String> pool = new HashSet<String>(); 
     private HashMap<Long, KeyValueService.Client> clients = new HashMap<Long, KeyValueService.Client>();
     private boolean snapshotted = false;
     private Object backup_lock = new Object();
-    //private Object client_lock = new Object();
-    //KeyValueService.Client client = null;
 
     public KeyValueHandler(String host, int port, CuratorFramework curClient, String zkNode) {
         this.host = host;
@@ -38,6 +39,10 @@ public class KeyValueHandler implements KeyValueService.Iface {
         this.curClient = curClient;
         this.zkNode = zkNode;
         myMap = new ConcurrentHashMap<String, String>();	
+    }
+
+    public void multiput(Map<String, String> arg) throws org.apache.thrift.TException {
+        myMap.putAll(arg);
     }
 
     public String get(String key) throws org.apache.thrift.TException
@@ -64,7 +69,7 @@ public class KeyValueHandler implements KeyValueService.Iface {
 
     public void put(String key, String value) throws org.apache.thrift.TException
     {
-        //System.out.println("PUT " + key);
+       //System.out.println("PUT " + key);
         if ((isPrimary() && getBackup() != null)) {
             try {
                 lock(key);
@@ -83,10 +88,8 @@ public class KeyValueHandler implements KeyValueService.Iface {
             }
         } else {
             try {
-                //lock(key);
                 myMap.put(key, value);
             } finally {
-                //unlock(key);
             }
         }
     }
@@ -130,6 +133,8 @@ public class KeyValueHandler implements KeyValueService.Iface {
     }
 
     private String getPrimary() {
+        if (primaryCache != null)
+            return primaryCache;
         while (true) {
             try {
                 GetChildrenBuilder childrenBuilder = curClient.getChildren();
@@ -139,18 +144,31 @@ public class KeyValueHandler implements KeyValueService.Iface {
                 for (String child : children) {
                     if (primaryChild == null || child.compareTo(primaryChild) < 0) {
                         primary = new String(curClient.getData().forPath(zkNode + "/" + child));
-                        /*
-                        curClient.getData().usingWatcher(new CuratorWatcher() {
-                            @Override
-                            public void process(WatchedEvent event) throws Exception {
-                                if (event.getType().equals(Watcher.Event.EventType.NodeDataChanged)) {
-                                    System.out.println("SOMETHING CHANGED");
-                                }
-                            }
-                        }).forPath(zkNode + "/" + child);
-                        */
+                        primaryChild = child;
                     }
                 }
+
+                // Watch primary node
+                if (!primary.equals(host + ":" + port)) {
+                    String path = zkNode + "/" + primaryChild;
+                    final NodeCache nodeCache = new NodeCache(curClient, path);
+                    nodeCache.getListenable().addListener(new NodeCacheListener() {
+                        @Override
+                        public void nodeChanged() throws Exception {
+                            ChildData currentData = nodeCache.getCurrentData();
+                            // zkNode is deleted when the data is null
+                            if (currentData == null) {
+                                IsPrimary = null;
+                                primaryCache = null;
+                                System.out.println("Primary is now dead");
+                                nodeCache.close();
+                            }
+                        }
+                    });
+                    nodeCache.start();
+                }
+
+                primaryCache = primary;
                 return primary;
             } catch (Exception e) {
                 System.out.println("exception getting primary.. trying again");
@@ -160,7 +178,11 @@ public class KeyValueHandler implements KeyValueService.Iface {
     }
 
     private boolean isPrimary() {
-        return (host + ":" + port).equals(getPrimary());
+        if (IsPrimary != null)
+            return IsPrimary;
+        String primary = getPrimary();
+        IsPrimary = (host + ":" + port).equals(primary);
+        return (host + ":" + port).equals(primary);
     }
 
     private String getBackup() {
@@ -176,20 +198,35 @@ public class KeyValueHandler implements KeyValueService.Iface {
                     if (!addr.equals(primary)) {
                         // First time seeing new backup. Copy snapshot
                         if (!snapshotted) {
+                            System.out.println("SNAPSHOTTING");
                             snapshotted = true;
-                            //client = getThriftClient(addr);
                             if (!clients.containsKey(Thread.currentThread().getId())) {
                                 clients.put(Thread.currentThread().getId(), getThriftClient(addr));
                             }
                             KeyValueService.Client client = clients.get(Thread.currentThread().getId());
-                            for (String key: myMap.keySet()) {
+                            client.multiput(myMap);
+                            /*for (String key: myMap.keySet()) {
                                 client.put(key, myMap.get(key));
-                            }                            
+                            }*/
                         }
                         backup = addr;
                         return addr;
                     }
                 }
+
+                // Watch home node for new children
+                /*
+                String path = zkNode;
+                final NodeCache nodeCache = new NodeCache(curClient, path);
+                nodeCache.getListenable().addListener(new NodeCacheListener() {
+                    @Override
+                    public void nodeChanged() throws Exception {
+                        System.out.println("SOMETHING CHANGED");
+                        nodeCache.close();
+                    }
+                });
+                nodeCache.start();
+                */
                 return null;
             } catch (Exception e) {
                 System.out.println("Cannot get backup");
