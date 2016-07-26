@@ -14,8 +14,8 @@ public class ConnectionPool {
     private static int POLL_FREQUENCY_MS = 1;
     private InetSocketAddress mAddr = null;
 
-    private ConcurrentLinkedQueue<KeyValueService.Client> mPool = 
-        new ConcurrentLinkedQueue<KeyValueService.Client>();
+    private BlockingQueue<KeyValueService.Client> mPool = 
+        new ArrayBlockingQueue<KeyValueService.Client>(CONNECTION_LIMIT);
 
     public ConnectionPool(String addr) {
         int ind = addr.lastIndexOf(":");
@@ -30,7 +30,7 @@ public class ConnectionPool {
                 TTransport transport = new TFramedTransport(sock);
                 transport.open();
                 TProtocol protocol = new TBinaryProtocol(transport);
-                mPool.add(new KeyValueService.Client(protocol));
+                mPool.put(new KeyValueService.Client(protocol));
             } catch (Exception e) {
                 System.out.println("Error creating connection pool");
             }
@@ -38,13 +38,22 @@ public class ConnectionPool {
     }
 
     public KeyValueService.Client getConnection() {
-        while (mPool.isEmpty()) {
-        } 
-        KeyValueService.Client client = mPool.poll();
-        return client;
+        while (true) {
+            try {
+                KeyValueService.Client client = mPool.take();
+                return client;
+            } catch (Exception e) {
+            }
+        }
     }
 
     public void releaseConnection(KeyValueService.Client client) {
-        mPool.offer(client);
+        while (true) {
+            try {
+                mPool.put(client);
+                break;
+            } catch (Exception e) {
+            }
+        }
     }
 }

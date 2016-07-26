@@ -29,7 +29,8 @@ public class KeyValueHandler implements KeyValueService.Iface {
     private String primaryCache = null;
     private int port;
     private HashSet<String> pool = new HashSet<String>(); 
-    private HashMap<Long, KeyValueService.Client> clients = new HashMap<Long, KeyValueService.Client>();
+    private ConnectionPool cPool = null;
+    //private HashMap<Long, KeyValueService.Client> clients = new HashMap<Long, KeyValueService.Client>();
     private boolean snapshotted = false;
     private Object backup_lock = new Object();
 
@@ -39,6 +40,20 @@ public class KeyValueHandler implements KeyValueService.Iface {
         this.curClient = curClient;
         this.zkNode = zkNode;
         myMap = new ConcurrentHashMap<String, String>();	
+
+        try {
+            curClient.getCuratorListenable().addListener(new CuratorListener() {
+                @Override
+                public void eventReceived(CuratorFramework curator, CuratorEvent event) throws Exception {
+                    if (event.getType() == CuratorEventType.WATCHED
+                        && event.getWatchedEvent().getType() == Watcher.Event.EventType.NodeChildrenChanged) {
+                        backup = null;
+                    }
+                }
+            });
+            curClient.getData().watched().forPath(zkNode);
+        } catch (Exception e) {
+        }
     }
 
     public void multiput(Map<String, String> arg) throws org.apache.thrift.TException {
@@ -75,11 +90,15 @@ public class KeyValueHandler implements KeyValueService.Iface {
                 lock(key);
                 myMap.put(key, value);
                 try {
+                    /*
                     if (!clients.containsKey(Thread.currentThread().getId())) {
                         clients.put(Thread.currentThread().getId(), getThriftClient(backup));
                     }
                     KeyValueService.Client client = clients.get(Thread.currentThread().getId());
+                    */
+                    KeyValueService.Client client = cPool.getConnection();
                     client.put(key, value);
+                    cPool.releaseConnection(client);
                 } catch (Exception e) {
                     e.printStackTrace(System.out);
                 }
@@ -158,10 +177,14 @@ public class KeyValueHandler implements KeyValueService.Iface {
                             ChildData currentData = nodeCache.getCurrentData();
                             // zkNode is deleted when the data is null
                             if (currentData == null) {
-                                IsPrimary = null;
-                                primaryCache = null;
-                                System.out.println("Primary is now dead");
-                                nodeCache.close();
+                                if (IsPrimary != null && IsPrimary == true) {
+                                    // Once a primary, never stops being one
+                                } else {
+                                    IsPrimary = null;
+                                    primaryCache = null;
+                                    System.out.println("Primary is now dead");
+                                    nodeCache.close();
+                                }
                             }
                         }
                     });
@@ -187,8 +210,10 @@ public class KeyValueHandler implements KeyValueService.Iface {
 
     private String getBackup() {
         synchronized(backup_lock) {
-            if (backup != null)
+            if (backup != null && !backup.equals(""))
                 return backup;
+            if (backup != null && backup.equals(""))
+                return null;
             try {
                 GetChildrenBuilder childrenBuilder = curClient.getChildren();
                 List<String> children = childrenBuilder.watched().forPath(zkNode);
@@ -200,11 +225,16 @@ public class KeyValueHandler implements KeyValueService.Iface {
                         if (!snapshotted) {
                             System.out.println("SNAPSHOTTING");
                             snapshotted = true;
+                            /*
                             if (!clients.containsKey(Thread.currentThread().getId())) {
                                 clients.put(Thread.currentThread().getId(), getThriftClient(addr));
                             }
                             KeyValueService.Client client = clients.get(Thread.currentThread().getId());
+                            */
+                            cPool = new ConnectionPool(addr);
+                            KeyValueService.Client client = cPool.getConnection();
                             client.multiput(myMap);
+                            cPool.releaseConnection(client);
                             /*for (String key: myMap.keySet()) {
                                 client.put(key, myMap.get(key));
                             }*/
@@ -227,6 +257,7 @@ public class KeyValueHandler implements KeyValueService.Iface {
                 });
                 nodeCache.start();
                 */
+                backup = "";
                 return null;
             } catch (Exception e) {
                 System.out.println("Cannot get backup");
